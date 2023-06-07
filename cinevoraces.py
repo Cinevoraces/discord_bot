@@ -4,7 +4,9 @@ from dataclasses import dataclass
 
 from cinevoraces.env_variables import load_env_variables, check_env_variables
 from cinevoraces.movie_thread import get_thread_infos
-from cinevoraces.movie import get_movie, get_movie_availability, set_message_content
+from cinevoraces.tmdb_movie import get_movie, get_movie_availability, get_random_picture_from_movie
+from cinevoraces.providers_message import set_message_content
+from cinevoraces.cinevoraces_movie import get_random_movie_title
 
 env_variables = load_env_variables()
 
@@ -24,7 +26,6 @@ async def on_ready():
 # Command to import the last movie from the API and create a new thread in the forum
 @bot.command()
 async def import_last_movie(ctx):
-    await ctx.send("Importing movies...")
     forum = bot.get_channel(int(env_variables['FORUM_ID']))
 
     # Get the thread infos from the API, then format them for the thread creation
@@ -61,11 +62,24 @@ class Game:
 
 @bot.command()
 async def begin_guess_movie(ctx):
-    # Get a random movie from database
-    # Extract its name
-    # Search for the movie on TMDB
+    # Get a random movie from cinévoraces database
+    random_cinevoraces_movie_title, error = get_random_movie_title(env_variables)
+    if error:
+        await ctx.send(error['message'])
+    print(random_cinevoraces_movie_title)
+    # Search for the movie on TMDB and get its id
+    tmdb_movie, error = get_movie(env_variables, query=random_cinevoraces_movie_title)
+    if error:
+        await ctx.send(error['message'])
+    tmdb_movie_id = tmdb_movie['id']
+    print(tmdb_movie_id)
     # Get a random picture from the movie
-    pass
+    image, error = get_random_picture_from_movie(env_variables, tmdb_movie_id)
+    if error:
+        await ctx.send(error['message'])
+    
+    image_url = f"https://www.themoviedb.org/t/p/original{image['file_path']}"
+    await ctx.send(f"Devinez le film à partir de cette image !\n\n{image_url}")
 
 @bot.command()
 async def my_guess(ctx, movie_title):

@@ -9,7 +9,7 @@ def check_thread_already_exists(forum, french_title):
         raise Exception("Thread already exists")
 
 def get_thread_infos(env_variables, forum):
-    response = requests.get(env_variables['API_ROUTE'])
+    response = requests.get(f"{env_variables['API_ROUTE']}/movies?where[is_published]=true&sort=desc&limit=1&select[presentation]=true")
     response.raise_for_status() # Raise an exception if the status code is not 200
 
     if response.status_code != 200:
