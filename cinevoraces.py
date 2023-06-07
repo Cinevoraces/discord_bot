@@ -60,8 +60,14 @@ class Game:
     is_active: bool = False
     movie_title: str = ""
 
+game = Game()
+
 @bot.command()
 async def begin_guess_movie(ctx):
+    # Check if a game is already active
+    if game.is_active:
+        await ctx.send("Une partie est déjà en cours !")
+        return
     # Get a random movie from cinévoraces database
     random_cinevoraces_movie_title, error = get_random_movie_title(env_variables)
     if error:
@@ -80,13 +86,19 @@ async def begin_guess_movie(ctx):
     
     image_url = f"https://www.themoviedb.org/t/p/original{image['file_path']}"
     await ctx.send(f"Devinez le film à partir de cette image !\n\n{image_url}")
+    game.is_active = True
+    game.movie_title = random_cinevoraces_movie_title
 
 @bot.command()
-async def my_guess(ctx, movie_title):
+async def my_guess(ctx, movie_title_guess):
     # Check if the movie_title is correct (case insensitive)
     # If it is, stop the game and congratulate the player
-    # If it is not, send a message to the player to tell him he is wrong
-    pass
+    if not movie_title_guess.lower() == game.movie_title.lower():
+        await ctx.send(f"Il ne s'agit pas de {movie_title_guess} ! Essayez encore !")
+        return
+
+    await ctx.send(f"Bravo, vous avez trouvé le film ! Il s'agissait bien de {game.movie_title}")
+    game.is_active = False
 
 # Run the bot
 bot.run(env_variables['BOT_TOKEN']) # Run the bot
