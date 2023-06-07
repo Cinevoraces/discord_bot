@@ -10,6 +10,7 @@ def load_env_variables():
     'API_ROUTE': os.getenv("API_ROUTE"),
     'BASE_URL': os.getenv("BASE_URL"),
     'BASE_IMG_URL': os.getenv("BASE_IMG_URL"),
+    'TMDB_KEY': os.getenv('TMDB_KEY')
   }
   return env_variables
 

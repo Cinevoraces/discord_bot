@@ -31,5 +31,9 @@ async def import_last_movie(ctx):
     # Create the new thread in the forum
     await forum.create_thread(name=name, content=content)
 
+# @bot.command()
+# async def get_streaming_availability(ctx, title, region):
+   
+
 # Run the bot
 bot.run(env_variables['BOT_TOKEN']) # Run the bot
