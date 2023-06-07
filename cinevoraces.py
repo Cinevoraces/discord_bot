@@ -3,6 +3,7 @@ from discord.ext import commands
 
 from cinevoraces.env_variables import load_env_variables, check_env_variables
 from cinevoraces.movie_thread import get_thread_infos
+from cinevoraces.movie import get_movie, get_movie_availability
 
 env_variables = load_env_variables()
 
@@ -31,9 +32,21 @@ async def import_last_movie(ctx):
     # Create the new thread in the forum
     await forum.create_thread(name=name, content=content)
 
-# @bot.command()
-# async def get_streaming_availability(ctx, title, region):
-   
+@bot.command()
+async def get_streaming_availability(ctx, query, region="FR"):
+    movie, error = get_movie(env_variables, query=query)
+
+    if error:
+        await ctx.send(error['message'])
+
+    await ctx.send(f"J'ai trouvé le film {movie['title']} !")
+
+    tmdb_movie_id = movie['id']
+    availability = get_movie_availability(env_variables, tmdb_movie_id, region)
+    
+    print(availability)
+    # region_filtered_availability = availability['FR']
+    # print(region_filtered_availability)
 
 # Run the bot
 bot.run(env_variables['BOT_TOKEN']) # Run the bot
