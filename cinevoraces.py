@@ -3,7 +3,7 @@ from discord.ext import commands
 
 from cinevoraces.env_variables import load_env_variables, check_env_variables
 from cinevoraces.movie_thread import get_thread_infos
-from cinevoraces.movie import get_movie, get_movie_availability
+from cinevoraces.movie import get_movie, get_movie_availability, set_message_content
 
 env_variables = load_env_variables()
 
@@ -12,13 +12,13 @@ bot = commands.Bot(command_prefix="!", intents=discord.Intents.all()) # Create a
 
 @bot.event
 async def on_ready():
-  # Check that all environment variables are defined
-  check_env_variables(env_variables)
-  
-  channel = bot.get_channel(int(env_variables['CHANNEL_ID']))
-  print(f"{bot.user.name} is listenning to {channel.name}")
-  print("------")
-  await channel.send(f"Hello, {bot.user.name} is ready to go !")
+    # Check that all environment variables are defined
+    check_env_variables(env_variables)
+    
+    channel = bot.get_channel(int(env_variables['CHANNEL_ID']))
+    print(f"{bot.user.name} is listenning to {channel.name}")
+    print("------")
+    await channel.send(f"Hello, {bot.user.name} is ready to go !")
 
 # Command to import the last movie from the API and create a new thread in the forum
 @bot.command()
@@ -42,11 +42,13 @@ async def get_streaming_availability(ctx, query, region="FR"):
     await ctx.send(f"J'ai trouvé le film {movie['title']} !")
 
     tmdb_movie_id = movie['id']
-    availability = get_movie_availability(env_variables, tmdb_movie_id, region)
+    availability, error = get_movie_availability(env_variables, tmdb_movie_id, region)
     
-    print(availability)
-    # region_filtered_availability = availability['FR']
-    # print(region_filtered_availability)
+    if error:
+        await ctx.send(error['message'])
+    
+    message_content = set_message_content(movie['title'], region, availability)
+    await ctx.send(message_content)
 
 # Run the bot
 bot.run(env_variables['BOT_TOKEN']) # Run the bot
