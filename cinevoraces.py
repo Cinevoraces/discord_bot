@@ -1,5 +1,6 @@
 import discord
 from discord.ext import commands
+from dataclasses import dataclass
 
 from cinevoraces.env_variables import load_env_variables, check_env_variables
 from cinevoraces.movie_thread import get_thread_infos
@@ -32,6 +33,7 @@ async def import_last_movie(ctx):
     # Create the new thread in the forum
     await forum.create_thread(name=name, content=content)
 
+# For a given movie, get the streaming availability in a given region
 @bot.command()
 async def get_streaming_availability(ctx, query, region="FR"):
     movie, error = get_movie(env_variables, query=query)
@@ -49,6 +51,28 @@ async def get_streaming_availability(ctx, query, region="FR"):
     
     message_content = set_message_content(movie['title'], region, availability)
     await ctx.send(message_content)
+
+# Guess the movie from a given picture, from Cinévoraces database
+
+@dataclass
+class Game:
+    is_active: bool = False
+    movie_title: str = ""
+
+@bot.command()
+async def begin_guess_movie(ctx):
+    # Get a random movie from database
+    # Extract its name
+    # Search for the movie on TMDB
+    # Get a random picture from the movie
+    pass
+
+@bot.command()
+async def my_guess(ctx, movie_title):
+    # Check if the movie_title is correct (case insensitive)
+    # If it is, stop the game and congratulate the player
+    # If it is not, send a message to the player to tell him he is wrong
+    pass
 
 # Run the bot
 bot.run(env_variables['BOT_TOKEN']) # Run the bot
