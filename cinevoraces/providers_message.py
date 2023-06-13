@@ -1,9 +1,9 @@
 def set_providers_message(service_type, providers_list):
     """Set the message content for a given service type and providers list"""
     if len(providers_list) == 0:
-        return f"Aucun service de {service_type} n'a été trouvé pour ce film."
+        return f"Aucun service de {service_type} n'a été trouvé pour ce film.\n"
     else:
-        return f"Ce film est disponible en {service_type} sur les plateformes suivantes : {', '.join(providers_list)} \n"
+        return f"{service_type} sur les plateformes suivantes : {', '.join(providers_list)} \n"
 
 def set_message_content(movie_title, region, availability):
     # Extraction of different providers options and flatten it keeping only names
