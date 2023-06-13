@@ -7,7 +7,7 @@ def set_providers_message(service_type, providers_list):
 
 def set_message_content(movie_title, region, availability):
     # Extraction of different providers options and flatten it keeping only names
-    flatrate, buy, rent = (availabilty[k] if k in availabilty else [] for k in ("flatrate", "buy", "rent"))
+    flatrate, buy, rent = (availabiltiy[k] if k in availability else [] for k in ("flatrate", "buy", "rent"))
     flatrate_providers_name, buy_providers_name, rent_providers_name = (
         list(map(lambda provider: provider['provider_name'], option)) for option in [flatrate, buy, rent]
     )
