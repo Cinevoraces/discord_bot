@@ -19,18 +19,7 @@ async def on_ready():
     channel = bot.get_channel(int(env_variables['AVAILABILITY_CHANNEL_ID']))
     print(f"{bot.user.name} is listenning to {channel.name}")
     print("------")
-    await channel.send(f"Hello, {bot.user.name} is ready to go !")
-
-# Command to import the last movie from the API and create a new thread in the forum
-@bot.command()
-async def import_last_movie(ctx):
-    forum = bot.get_channel(int(env_variables['FORUM_ID']))
-
-    # Get the thread infos from the API, then format them for the thread creation
-    name, content = get_thread_infos(env_variables, forum)
-
-    # Create the new thread in the forum
-    await forum.create_thread(name=name, content=content)
+    await channel.send(f"Bonjour, {bot.user.name} est prêt.\nPour demander la disponibilité d'un film, entrez la commande get_streaming_availability \"Titre de mon film !\" \"Code de région en deux lettres\"\nLe code de région par défaut (sans précision) est FR. Pour la Belgique précisez BE, pour les suisses précisez CH.")
 
 # For a given movie, get the streaming availability in a given region
 @bot.command()
