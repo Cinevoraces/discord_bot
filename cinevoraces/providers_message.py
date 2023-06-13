@@ -1,7 +1,7 @@
 def set_providers_message(service_type, providers_list):
     """Set the message content for a given service type and providers list"""
     if len(providers_list) == 0:
-        return f"Aucun service de {service_type} n'a été trouvé pour ce film.\n"
+        return f"- Aucun service de {service_type} n'a été trouvé pour ce film.\n"
     else:
         return f"- {service_type} sur les plateformes suivantes : {', '.join(providers_list)}.\n"
 
