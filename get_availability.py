@@ -18,7 +18,7 @@ async def on_ready():
     channel = bot.get_channel(int(env_variables['AVAILABILITY_CHANNEL_ID']))
     print(f"{bot.user.name} is listenning to {channel.name}")
     print("------")
-    await channel.send(f"Bonjour, {bot.user.name} est prêt.\nPour demander la disponibilité d'un film, entrez la commande !get_streaming_availability \"Titre de mon film !\" \"Code de région en deux lettres\"\nLe code de région par défaut (sans précision) est FR. Pour la Belgique précisez BE, pour les suisses précisez CH.")
+    await channel.send(f"Bonjour, {bot.user.name} est prêt.\nPour demander la disponibilité d'un film, entrez la commande !get_streaming_availability \"Titre de mon film !\" \"Code de région en deux lettres\"\nLe code de région par défaut (sans précision) est FR. Pour la Belgique précisez BE, pour la Suisse précisez CH.")
 
 # For a given movie, get the streaming availability in a given region
 @bot.command()
