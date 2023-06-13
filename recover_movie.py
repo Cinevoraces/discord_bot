@@ -17,7 +17,7 @@ async def on_ready():
     channel = bot.get_channel(int(env_variables['ADMIN_CHANNEL_ID']))
     print(f"{bot.user.name} is listenning to {channel.name}")
     print("------")
-    await channel.send(f"Hello, {bot.user.name} is ready to go !")
+    await channel.send(f"Bonjour, {bot.user.name} est à l'écoute !\nPour rappatrier le dernier film publié sur le site, entrer la commande !import_last_movie. ")
 
 # Command to import the last movie from the API and create a new thread in the forum
 @bot.command()
