@@ -62,6 +62,9 @@ async def begin_guess_movie(ctx):
 
 @bot.command()
 async def my_guess(ctx, movie_title_guess):
+    if game.is_active == False:
+        await ctx.send(f"Aucune partie en cours, lancez-vous !")
+        return
     # Check if the movie_title is correct (case insensitive)
     # If it is, stop the game and congratulate the player
     if not movie_title_guess.lower() == game.movie_title.lower():
@@ -70,6 +73,17 @@ async def my_guess(ctx, movie_title_guess):
 
     await ctx.send(f"Bravo, vous avez trouvé le film ! Il s'agissait bien de {game.movie_title}")
     game.is_active = False
+
+@bot.command()
+async def give_up(ctx):
+    if game.is_active == False:
+        await ctx.send(f"Aucune partie en cours, lancez-vous !")
+        return
+    
+    # Stops the game and give the answer
+    await ctx.send(f"Le film à deviner était {game.movie_title}")
+    game.is_active = False
+    return
 
 # Run the bot
 bot.run(env_variables['BOT_TOKEN']) # Run the bot
