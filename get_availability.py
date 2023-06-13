@@ -2,7 +2,6 @@ import discord
 from discord.ext import commands
 
 from cinevoraces.env_variables import load_env_variables, check_env_variables
-from cinevoraces.movie_thread import get_thread_infos
 from cinevoraces.tmdb_movie import get_movie, get_movie_availability
 from cinevoraces.providers_message import set_message_content
 

@@ -36,17 +36,20 @@ async def begin_guess_movie(ctx):
     if game.is_active:
         await ctx.send("Une partie est déjà en cours !")
         return
+    
     # Get a random movie from cinévoraces database
     random_cinevoraces_movie_title, error = get_random_movie_title(env_variables)
     if error:
         await ctx.send(error['message'])
     print(random_cinevoraces_movie_title)
+
     # Search for the movie on TMDB and get its id
     tmdb_movie, error = get_movie(env_variables, query=random_cinevoraces_movie_title)
     if error:
         await ctx.send(error['message'])
     tmdb_movie_id = tmdb_movie['id']
     print(tmdb_movie_id)
+    
     # Get a random picture from the movie
     image, error = get_random_picture_from_movie(env_variables, tmdb_movie_id)
     if error:
