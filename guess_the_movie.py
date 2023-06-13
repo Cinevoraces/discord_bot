@@ -19,7 +19,7 @@ async def on_ready():
     channel = bot.get_channel(int(env_variables['GAME_CHANNEL_ID']))
     print(f"{bot.user.name} is listenning to {channel.name}")
     print("------")
-    await channel.send(f"Bonjour, {bot.user.name} est prêt à lancer une partie.\n Pour commencer, entrez !begin_guess_movie.\n Pour répondre, entrez !my_guess \"Titre du film\".")
+    await channel.send(f"Bonjour, {bot.user.name} est prêt à lancer une partie.\n Pour commencer, entrez !begin_guess_movie.\n Pour répondre, entrez !my_guess \"Titre du film\".\nPour abandonner, entrez !give_up")
 
 # Guess the movie from a given picture, from Cinévoraces database
 
