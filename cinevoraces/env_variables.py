@@ -5,7 +5,9 @@ def load_env_variables():
   load_dotenv()
   env_variables =  {
     'BOT_TOKEN': os.getenv("BOT_TOKEN"),
-    'CHANNEL_ID': os.getenv("CHANNEL_ID"),
+    'ADMIN_CHANNEL_ID': os.getenv("ADMIN_CHANNEL_ID"),
+    'AVAILABILITY_CHANNEL_ID': os.getenv("AVAILABILITY_CHANNEL_ID"),
+    'GAME_CHANNEL_ID': os.getenv("GAME_CHANNEL_ID"),
     'FORUM_ID': os.getenv("FORUM_ID"),
     'API_ROUTE': os.getenv("API_ROUTE"),
     'BASE_URL': os.getenv("BASE_URL"),
