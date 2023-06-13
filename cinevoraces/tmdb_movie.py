@@ -22,9 +22,13 @@ def get_movie_availability(env_variables, tmdb_movie_id, region):
     response.raise_for_status() # Raise an exception if the status code is not 200
 
     if not check_response(response) or len(response.json()['results']) == 0:
-        return None, { "message": "Aucun résultat trouvé pour ce film."}
+        return None, { "message": "Aucun résultat pour aucune région trouvé pour ce film."}
     
     global_availability = response.json()['results']
+
+    if global_availability[region] is None:
+        return None, { "message": f"Aucun résultat pour la région {region}."}
+    
     return global_availability[region], None
 
 def get_random_picture_from_movie(env_variables, tmdb_movie_id):
