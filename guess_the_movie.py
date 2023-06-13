@@ -3,9 +3,7 @@ from discord.ext import commands
 from dataclasses import dataclass
 
 from cinevoraces.env_variables import load_env_variables, check_env_variables
-from cinevoraces.movie_thread import get_thread_infos
-from cinevoraces.tmdb_movie import get_movie, get_movie_availability, get_random_picture_from_movie
-from cinevoraces.providers_message import set_message_content
+from cinevoraces.tmdb_movie import get_movie, get_random_picture_from_movie
 from cinevoraces.cinevoraces_movie import get_random_movie_title
 
 env_variables = load_env_variables()
