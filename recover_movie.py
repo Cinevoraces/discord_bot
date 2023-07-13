@@ -18,6 +18,7 @@ async def on_ready():
     print(f"{bot.user.name} is listenning to {channel.name}")
     print("------")
     await channel.send(f"Bonjour, {bot.user.name} est à l'écoute !\nPour rappatrier le dernier film publié sur le site, entrer la commande !import_last_movie. ")
+    return
 
 # Command to import the last movie from the API and create a new thread in the forum
 @bot.command()
@@ -25,10 +26,15 @@ async def import_last_movie(ctx):
     forum = bot.get_channel(int(env_variables['FORUM_ID']))
 
     # Get the thread infos from the API, then format them for the thread creation
-    name, content = get_thread_infos(env_variables, forum)
+    name, content, error = get_thread_infos(env_variables, forum)
+
+    if error:
+        await ctx.send(error['message'])
+        return
 
     # Create the new thread in the forum
     await forum.create_thread(name=name, content=content)
+    return
 
 # Run the bot
 bot.run(env_variables['BOT_TOKEN']) # Run the bot
