@@ -14,14 +14,14 @@ def get_thread_infos(env_variables, forum):
 
     if response.status_code != 200:
       print("Error while requesting API")
-      return None, { "message": "Erreur lors de la requête à l'API."}
+      return None, None, { "message": "Erreur lors de la requête à l'API."}
     
     last_movie = response.json()[0]
     
     id, season_number, french_title, complete_presentation = (last_movie[k] for k in ("id", "season_number", "french_title", "presentation"))
 
     # Check if a thread with the same movie already exists
-    if check_thread_already_exists(forum, french_title): return None, { "message": "Un thread avec ce film existe déjà."}
+    if check_thread_already_exists(forum, french_title): return None, None, { "message": "Un thread avec ce film existe déjà."}
 
     # Preparing data to inject into both title and opening post
     author_pseudo, presentation = (complete_presentation[k] for k in ("author_pseudo", "presentation"))
@@ -30,4 +30,4 @@ def get_thread_infos(env_variables, forum):
     name = f"S{season_number}E{episode_number} - {french_title}"
     content = f"Film proposé cette semaine par @{author_pseudo}, merci à iel :\n\n" + f"*\"{presentation}\"*\n\nLa fiche du film sur le site de référénce : {env_variables['BASE_URL']}/films/{id}"
 
-    return name, content
+    return name, content, None
